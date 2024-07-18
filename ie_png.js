@@ -1,6 +1,6 @@
-var ie_png = {
+var ie_jpg = {
 
-	ns: 'ie_png',
+	ns: 'ie_jpg',
 	imgSize: {},
 	
 	createVmlNameSpace: function() { /* enable VML */
@@ -9,7 +9,7 @@ var ie_png = {
 		}
 		if (window.attachEvent) {
 			window.attachEvent('onbeforeunload', function() {
-				ie_png = null;
+				ie_jpg = null;
 			});
 		}
 	},
@@ -33,7 +33,7 @@ var ie_png = {
 	readPropertyChange: function() {
 		var el = event.srcElement;
 		if (event.propertyName.search('background') != -1 || event.propertyName.search('border') != -1) {
-			ie_png.applyVML(el);
+			ie_jpg.applyVML(el);
 		}
 		if (event.propertyName == 'style.display') {
 			var display = (el.currentStyle.display == 'none') ? 'none' : 'block';
@@ -57,7 +57,7 @@ var ie_png = {
 	
 	handlePseudoHover: function(el) {
 		setTimeout(function() { /* wouldn't work as intended without setTimeout */
-			ie_png.applyVML(el);
+			ie_jpg.applyVML(el);
 		}, 1);
 	},
 	
@@ -68,7 +68,7 @@ var ie_png = {
 	fix: function(selector) {
 		var selectors = selector.split(','); /* multiple selectors supported, no need for multiple calls to this anymore */
 		for (var i=0; i<selectors.length; i++) {
-			this.styleSheet.addRule(selectors[i], 'behavior:expression(ie_png.fixPng(this))'); /* seems to execute the function without adding it to the stylesheet - interesting... */
+			this.styleSheet.addRule(selectors[i], 'behavior:expression(ie_jpg.fixjpg(this))'); /* seems to execute the function without adding it to the stylesheet - interesting... */
 		}
 	},
 	
@@ -241,7 +241,7 @@ var ie_png = {
 		}
 		el.isImg = false;
 		if (el.nodeName == 'IMG') {
-			if(el.src.toLowerCase().search(/\.png$/) != -1) {
+			if(el.src.toLowerCase().search(/\.jpg$/) != -1) {
 				el.isImg = true;
 				el.style.visibility = 'hidden';
 			}
@@ -249,10 +249,10 @@ var ie_png = {
 				return;
 			}
 		}
-		else if (el.currentStyle.backgroundImage.toLowerCase().search('.png') == -1) {
+		else if (el.currentStyle.backgroundImage.toLowerCase().search('jpg') == -1) {
 			return;
 		}
-		var lib = ie_png;
+		var lib = ie_jpg;
 		el.vml = {color: {}, image: {}};
 		var els = {shape: {}, fill: {}};
 		for (var r in el.vml) {
@@ -281,5 +281,5 @@ var ie_png = {
 try {
 	document.execCommand("BackgroundImageCache", false, true); /* TredoSoft Multiple IE doesn't like this, so try{} it */
 } catch(r) {}
-ie_png.createVmlNameSpace();
-ie_png.createVmlStyleSheet();
+ie_jpg.createVmlNameSpace();
+ie_jpg.createVmlStyleSheet();
